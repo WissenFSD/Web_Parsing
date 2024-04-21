@@ -23,12 +23,22 @@ namespace Web_Parsing.Controllers
         {
 
 
-
+            List<string> urls = new List<string>();
             var web = new HtmlWeb();
             var doc = web.Load("https://www.google.com.tr/search?q=" + search);
+            HtmlNode[] nodes = doc.DocumentNode.SelectNodes("//a[@href]")
+           .ToArray();
+            foreach (HtmlNode item in nodes)
+            {
+                Console.WriteLine(item.InnerHtml);
+            }
+            List<string> outputList = new List<string>();
 
-            //  WebClient cli = new WebClient();
-            //cli.DownloadString()
+            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//div[@class='rc']"))
+            {
+                outputList.Add(link.InnerText);
+            }
+
 
 
             return View();
