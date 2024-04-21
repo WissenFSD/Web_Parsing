@@ -25,23 +25,16 @@ namespace Web_Parsing.Controllers
 
             List<string> urls = new List<string>();
             var web = new HtmlWeb();
-            var doc = web.Load("https://www.google.com.tr/search?q=" + search);
-            HtmlNode[] nodes = doc.DocumentNode.SelectNodes("//a[@href]")
-           .ToArray();
-            foreach (HtmlNode item in nodes)
-            {
-                Console.WriteLine(item.InnerHtml);
-            }
-            List<string> outputList = new List<string>();
-
-            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//div[@class='rc']"))
-            {
-                outputList.Add(link.InnerText);
-            }
+            var doc = web.Load("https://www.peugeot.com.tr/");
 
 
 
-            return View();
+
+            ViewBag.Html = doc.DocumentNode.InnerHtml;
+
+            // Ödev : Ýstediðiniz herhangi bir siteyi parse edip, Xpath kullanarak istediðiniz html'i almanýzý saðlar.Sizde bu örnek üzerinden istediðiniz bir sitenin bir kýsmýný parse edebilirsiniz.
+
+            return View("Index");
         }
 
         public IActionResult Privacy()
