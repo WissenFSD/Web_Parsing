@@ -21,16 +21,14 @@ namespace Web_Parsing.Controllers
         }
         public IActionResult MoggleSearch(string search)
         {
-
-
             List<string> urls = new List<string>();
             var web = new HtmlWeb();
-            var doc = web.Load("https://www.peugeot.com.tr/");
-
-
-
-
-            ViewBag.Html = doc.DocumentNode.InnerHtml;
+            var doc = web.Load("https://deprem.afad.gov.tr/last-earthquakes.html");
+            var result =   doc.DocumentNode.SelectNodes("//tr//td");
+            foreach (var item in result)
+            {
+                
+            }
 
             // Ödev : Ýstediðiniz herhangi bir siteyi parse edip, Xpath kullanarak istediðiniz html'i almanýzý saðlar.Sizde bu örnek üzerinden istediðiniz bir sitenin bir kýsmýný parse edebilirsiniz.
 
