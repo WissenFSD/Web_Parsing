@@ -17,27 +17,27 @@ namespace Web_Parsing.Controllers
             _logger = logger;
         }
 
+       
         public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult MoggleSearch(string search)
         {
             List<string> location = new List<string>();
             List<string> urls = new List<string>();
+
+            // web client ile bir web sitesinin tüm içeriðini string olarak aldýk.
             var web = new WebClient();
             web.Encoding = Encoding.UTF8;
             var html = web.DownloadString("https://deprem.afad.gov.tr/last-earthquakes.html");
 
+            // ardýndan, HtmlAgilityPack'e , çektiðimiz html dosyasýný yükledik. 
             var doc =new  HtmlDocument();
             doc.LoadHtml(html);
 
+            // Yüklemenin ardýndan, HTml içerisindeki, yakalamak istediðimiz boðumlarý xpath dili ile yakaladýk.
+            // AÞaðýda yazýlan XPath dili, td içerisindeki 7. sýradaki td'i alma iþine yarar
             var result =   doc.DocumentNode.SelectNodes("//td[position()=7]");
             foreach (var item in result)
             {
-              
-               
-
+                // ilgili td yakalandýktan sonra, td'nin içerisindeki text bir koleksiyona eklenir.
                 location.Add(item.InnerText);
             }
 
