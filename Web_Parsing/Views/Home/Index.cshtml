@@ -1,37 +1,40 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model List<string>
 <link href="https://fonts.cdnfonts.com/css/product-sans" rel="stylesheet">
 <style>
-    .txttext{
-        width:500px;
-        border:1px solid black;
-        border-radius:20px;
-    }
-    h1{
-        font-family: 'Product Sans Black 900', sans-serif;
-     
-    }
+	.txttext {
+		width: 500px;
+		border: 1px solid black;
+		border-radius: 20px;
+	}
 
-    
+	h1 {
+		font-family: 'Product Sans Black 900', sans-serif;
+	}
+
 </style>
 
 <div class="text-center">
-    <h1 class="display-4">Moogle</h1>
-    
+	<h1 class="display-4">Moogle</h1>
+
 </div>
 <div class="text-center">
- 
-    @using (Html.BeginForm("MoggleSearch","Home", FormMethod.Post))
-    {
-        <input type="text" class="txttext" name="search" />
 
-        <input type="submit" value="Ara" />
-    }
-   
+	@using (Html.BeginForm("MoggleSearch", "Home", FormMethod.Post))
+	{
+		<input type="text" class="txttext" name="search" />
+
+		<input type="submit" value="Ara" />
+	}
+
 </div>
 
 <div class="text-start">
 
-   @Html.Raw(ViewBag.Html)
+	@if (Model != null)
+	{
+		@foreach (var item in Model)
+		{
+			<h3>@item</h3>
+		}
+	}
 </div>

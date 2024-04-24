@@ -1,5 +1,6 @@
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
@@ -24,23 +25,25 @@ namespace Web_Parsing.Controllers
         {
             List<string> location = new List<string>();
             List<string> urls = new List<string>();
-            var web = new HtmlWeb();
-            var doc = web.Load("https://deprem.afad.gov.tr/last-earthquakes.html");
+            var web = new WebClient();
+            web.Encoding = Encoding.UTF8;
+            var html = web.DownloadString("https://deprem.afad.gov.tr/last-earthquakes.html");
+
+            var doc =new  HtmlDocument();
+            doc.LoadHtml(html);
+
             var result =   doc.DocumentNode.SelectNodes("//td[position()=7]");
             foreach (var item in result)
             {
-                Encoding iso = Encoding.GetEncoding("ISO-8859-1");
-                Encoding utf8 = Encoding.UTF8;
-                byte[] utfBytes = utf8.GetBytes(item.InnerText);
-                byte[] isoBytes = Encoding.Convert(utf8, iso, utfBytes);
-                string msg = iso.GetString(isoBytes);
+              
+               
 
-                location.Add(msg);
+                location.Add(item.InnerText);
             }
 
             // Ödev : Ýstediðiniz herhangi bir siteyi parse edip, Xpath kullanarak istediðiniz html'i almanýzý saðlar.Sizde bu örnek üzerinden istediðiniz bir sitenin bir kýsmýný parse edebilirsiniz.
-
-            return View("Index");
+          
+            return View("Index",location);
         }
 
         public IActionResult Privacy()
